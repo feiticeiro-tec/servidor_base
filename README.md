@@ -6,7 +6,7 @@
  - [X] Exemplo de estrutura de teste
  - [ ] Estrutura base de banco de dados ( SQLAlchemy )
  - [ ] Tabela Modelo
- - [ ] Types Personalizados (Password, StringSafe, CNPJ, CPF, CPF|CNPJ, UUID)
+ - [ ] Types Personalizados (Password, StringSafe, CNPJ, CPF, CPF|CNPJ, UUID, CEP)
  - [ ] Captura de error
  - [ ] Estrutura base de api ( FlaskRESTX )
  

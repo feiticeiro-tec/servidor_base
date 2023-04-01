@@ -19,20 +19,23 @@ class Config():
 
     def __init__(self):
         self.set_desenvolvimento()
+        self.show_modo()
 
+    def show_modo(self, label=' '):
+        """MOSTRA NO CONSOLE O MODO ATUAL"""
         logging.debug('MOSTRANDO NA TELA O MODO ATUAL')
         msg = '{cor}{message:~^100}{reset}'
 
         if getattr(self, 'DESENVOLVIMENTO'):
             msg = msg.format(
                 cor=self.COLOR_YELLOW,
-                message=" MODO DE DESENVOLVIDOMENTO ",
+                message=f" MODO DE DESENVOLVIDOMENTO{label}",
                 reset=self.COLOR_RESET
             )
         else:
             msg = msg.format(
                 cor=self.COLOR_RED,
-                message=" MODO DE PRODUÇÃO ",
+                message=f" MODO DE PRODUÇÃO{label}",
                 reset=self.COLOR_RESET
             )
         print(msg)
@@ -66,10 +69,14 @@ class Config():
 
         self.load_env_generic('SECRET_KEY')
 
+        self.show_modo(' REQUIREMENTS CARREGADOS ')
+
     def init(self):
         """INICIALIZADOR DAS CONFIGURAÇÕES"""
         self.load_files_env()
         self.env_requireds()
+
+        logging.info('ENV REQUIREMENTS OKAY')
 
     @staticmethod
     def add_color_level(color: str, level: Any):
@@ -80,12 +87,14 @@ class Config():
 
     def color_levels(self,
                      error: str = None,
+                     critical: str = None,
                      warning: str = None,
                      info: str = None,
                      debug: str = None):
         """COLOCAR AS CORES NO LEVELS DE LOG"""
         logging.debug('DEFININDO AS CORES DE LOG')
         self.add_color_level(error or self.COLOR_RESET, logging.ERROR)
+        self.add_color_level(critical or self.COLOR_RESET, logging.CRITICAL)
         self.add_color_level(warning or self.COLOR_YELLOW, logging.WARNING)
         self.add_color_level(info or self.COLOR_BLUE, logging.INFO)
         self.add_color_level(debug or self.COLOR_GREEN, logging.DEBUG)
@@ -180,8 +189,16 @@ class Config():
         for envname in envnames:
             self.load_env_generic(envname)
 
-    def load_env_database(self):
+    def load_env_database(self, uri: str = None):
         """LER AS VARIAVEIS DE AMBIENTE E CRIA A URI DE CONEXÃO DO BANCO."""
+        logging.info('GERANDO URI DE CONEXÃO')
+
+        if uri:
+            setattr(self, 'SQLALCHEMY_DATABASE_URI', uri)
+            os.environ['SQLALCHEMY_DATABASE_URI'] = uri
+            logging.info('URI INFORMADA FOI COLOCADA NA ENV!')
+            return
+
         self.load_envs_generic(
             'DB_SERVER',
             'DB_BANCO',
@@ -197,4 +214,5 @@ class Config():
             password=getattr(self, 'DB_SENHA'),
             driver=getattr(self, 'DB_DRIVER')
         )
-        setattr(self, 'SQLALCHEMY_DABASE_URI', uri)
+        setattr(self, 'SQLALCHEMY_DATABASE_URI', uri)
+        logging.info('URI DE CONEXÃO FOI COLOCADA NA ENV!')

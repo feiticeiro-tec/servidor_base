@@ -10,7 +10,15 @@ logging.basicConfig(
 
 conf = Config()
 conf.init()
-conf.load_env_database()
+conf.load_env_database(uri='sqlite:///db.db')
 
 app = Servidor(conf)
 app.init_config()
+app.init_database()
+
+app.config_env.show_modo(' ONLINE ')
+
+with app.app_context():
+    from server.database.models import Teste
+    t = Teste()
+    t.add_save()
