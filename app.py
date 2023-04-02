@@ -19,5 +19,3 @@ app.init_api()
 app.init_blueprints()
 
 app.config_env.show_modo(' ONLINE ')
-
-

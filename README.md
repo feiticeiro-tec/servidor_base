@@ -1,5 +1,14 @@
 # SERVIDOR BASE
 
+## START
+```bash
+EXPORT AMBIENTE=[PRODUCAO | DESENVOLVIMENTO]
+flask run
+```
+
+
+## IDEIAS
+
  - [X] Leitura de variaveis de ambiente
  - [X] Separação de ambiente, produção e desenvolvimento
  - [X] Melhor visualização de errors
