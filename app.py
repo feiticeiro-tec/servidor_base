@@ -1,4 +1,4 @@
-"""INICIALIZAÇÃO DA APLICAÇÃO"""
+"""INICIALIZAÇÃO DA APLICAÇÃO """
 import logging
 from server import Servidor
 from server.config import Config
