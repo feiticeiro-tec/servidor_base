@@ -1,5 +1,5 @@
-from flask_restx.reqparse import RequestParser
 """FORMULARIOS RELACIONADO AO USUARIO"""
+from flask_restx.reqparse import RequestParser
 from server.api.form.form_types import string
 
 
