@@ -6,4 +6,4 @@ import pytest
 @pytest.fixture
 def on_log():
     """Fixture Exemplo"""
-    return lambda *x:logging.info('Log Fixure')
+    return lambda *x: logging.info('Log Fixure')

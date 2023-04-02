@@ -57,7 +57,7 @@ class Config():
         logging.debug(f'FILE ENV READ {has_file}')
 
     def env_requireds(self) -> None:
-        """FAZ A LEITURA DOS"""
+        """FAZ A LEITURA DO OS"""
         logging.debug('INICIANDO A LEITURA DE ENVS OBRIGATORIAS')
         self.load_env_generic(
             envname='TESTING',
@@ -108,7 +108,10 @@ class Config():
             raise EnvError(f'{envname} NÃO DEFINIDO!') from error
 
     @staticmethod
-    def check_value_in_choice(value: Any, envname: str, choices: list | dict) -> None:
+    def check_value_in_choice(
+            value: Any,
+            envname: str,
+            choices: list | dict) -> None:
         """VERIFICA SE O VALOR ESTAR NA CHOICE
         SE NAO ESTIVER LEVANTA UM ERROR -> EnvError"""
         if choices and value not in choices:
@@ -158,7 +161,8 @@ class Config():
                  on_value_in_choice: callable,
                  choices: list | dict = None,
                  ) -> None:
-        """FAZ AS CHAMADAS DE PERGAR E CAPTURAR O VALOR E DEFINE NO OBJETO O VALOR"""
+        """FAZ AS CHAMADAS DE PERGAR
+        E CAPTURAR O VALOR E DEFINE NO OBJETO O VALOR"""
         logging.debug(f'LOAD ENV {envname}')
         value = on_load_value_valid(
             envname=envname,
@@ -167,7 +171,9 @@ class Config():
         value = on_value_in_choice(value, choices)
         setattr(self, envname, value)
 
-    def load_env_generic(self, envname: str, choices: list | dict = None) -> None:
+    def load_env_generic(self,
+                         envname: str,
+                         choices: list | dict = None) -> None:
         """FAZ UMA CHAMADA COM A VALIDAÇÃO GENERICA DO OBJETO"""
         logging.debug(f"LOAD GENERIC ENV {envname}")
         return self.load_env(
@@ -178,7 +184,8 @@ class Config():
         )
 
     def set_desenvolvimento(self) -> None:
-        """COLOCA O VALOR NA VARIAVEL DESENVOLVIMENTO DE ACORDO COM O VALOR EM AMBIENTE"""
+        """COLOCA O VALOR NA VARIAVEL
+        DE DESENVOLVIMENTO DE ACORDO COM O VALOR EM AMBIENTE"""
         logging.debug('LEITURA DE AMBIENTE')
         self.load_env_generic('AMBIENTE', ['DESENVOLVIMENTO', 'PRODUCAO'])
         dev = True if getattr(self, 'AMBIENTE') == 'DESENVOLVIMENTO' else False

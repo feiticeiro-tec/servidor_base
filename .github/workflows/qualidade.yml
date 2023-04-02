@@ -1,0 +1,9 @@
+name: Teste de qualidade
+run-name: ${{ github.actor }}
+on: [push]
+jobs:
+  teste_de_qualidade:
+    runs-on: ubuntu-letest
+    steps:
+        - uses: actions/checkout@v3
+        - run: flake8 --ginore=F401

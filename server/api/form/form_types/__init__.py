@@ -1,5 +1,6 @@
 """TYPOS E TRATAMENTOS DE ENTRADA"""
 
+
 def string(strip: bool = True) -> callable:
     """TYPE DE STRING PARA O FORM"""
     def inner(value: str) -> None | str:

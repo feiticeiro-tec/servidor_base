@@ -7,7 +7,8 @@ class ExceptionBase(Exception):
     RESET = '\033[0m'
 
     def __str__(self) -> str:
-        return f"{self.COLOR}{self.__class__.__name__}{self.RESET}: {self.args[0]}"
+        return f"{self.COLOR}{self.__class__.__name__}"\
+                "{self.RESET}: {self.args[0]}"
 
 
 class EnvError(ExceptionBase):
