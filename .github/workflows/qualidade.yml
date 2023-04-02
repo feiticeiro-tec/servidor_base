@@ -2,8 +2,12 @@ name: Teste de qualidade
 run-name: ${{ github.actor }}
 on: [push]
 jobs:
-  teste_de_qualidade:
-    runs-on: ubuntu-letest
+  teste_qualidade:
+    runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v3
-        - run: flake8 --ginore=F401
+        - name: Checkout Do Projeto
+          uses: actions/checkout@v2
+        - name: Instalação do flake8
+          run: pip install flake8
+        - name: Run Teste ignorando o import no topo
+          run: flake8 --ginore=F401
