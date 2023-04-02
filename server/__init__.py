@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Api
 from server.database import init_db
 from server.api import init_api
+from server.blueprints import init_blueprints
 
 
 class Servidor(Flask):
@@ -37,3 +38,9 @@ class Servidor(Flask):
         logging.info("INICIALIZANO A API")
         with self.app_context():
             self.api = init_api(self)
+
+    def init_blueprints(self):
+        """INICIALIZAÇÃO DAS BLUEPRINTS"""
+        logging.info("INICIANDO AS BLUEPRINT")
+        with self.app_context():
+            init_blueprints(self)

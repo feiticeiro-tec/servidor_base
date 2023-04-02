@@ -3,7 +3,7 @@ import logging
 from flask_restx import Api
 from flask import Flask
 
-api = Api()
+api = Api(doc='/api/doc',prefix='/api')
 
 
 def init_api(app: Flask):

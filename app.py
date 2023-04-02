@@ -16,6 +16,7 @@ app = Servidor(conf)
 app.init_config()
 app.init_database()
 app.init_api()
+app.init_blueprints()
 
 app.config_env.show_modo(' ONLINE ')
 

@@ -1,0 +1,1 @@
+from server.blueprints.routes import teste
