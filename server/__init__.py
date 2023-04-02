@@ -13,11 +13,11 @@ class Servidor(Flask):
     database: SQLAlchemy
     api: Api
 
-    def __init__(self, config):
+    def __init__(self, config) -> None:
         super().__init__(__name__)
         self.config_env = config
 
-    def init_config(self):
+    def init_config(self) -> None:
         """INICIALIZAÇÃO DE CONFIGURAÇÕES DO SERVIDOR"""
         logging.info("CONFIGURANDO O SERVIDOR...")
         self.config.update({
@@ -27,19 +27,19 @@ class Servidor(Flask):
             "SECRET_KEY": self.config_env.SECRET_KEY
         })
 
-    def init_database(self):
+    def init_database(self) -> None:
         """INICIALIZAÇÃO DO BANCO DE DADOS"""
         logging.info("INICIALIZANDO O BANCO DE DADOS...")
         with self.app_context():
             self.database = init_db(self)
 
-    def init_api(self):
+    def init_api(self) -> None:
         """INICIALIZAÇÃO DA API JUNTO AS SUAS ROTAS """
         logging.info("INICIALIZANO A API")
         with self.app_context():
             self.api = init_api(self)
 
-    def init_blueprints(self):
+    def init_blueprints(self) -> None:
         """INICIALIZAÇÃO DAS BLUEPRINTS"""
         logging.info("INICIANDO AS BLUEPRINT")
         with self.app_context():

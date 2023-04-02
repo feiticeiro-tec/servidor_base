@@ -17,11 +17,11 @@ class Config():
     COLOR_BLUE = "\033[1;34m"
     COLOR_GREEN = "\033[32m"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.set_desenvolvimento()
         self.show_modo()
 
-    def show_modo(self, label=' '):
+    def show_modo(self, label=' ') -> None:
         """MOSTRA NO CONSOLE O MODO ATUAL"""
         logging.debug('MOSTRANDO NA TELA O MODO ATUAL')
         msg = '{cor}{message:~^100}{reset}'
@@ -40,7 +40,7 @@ class Config():
             )
         print(msg)
 
-    def load_files_env(self):
+    def load_files_env(self) -> None:
         """LER AS ENVS EM AQUIVOS"""
         if getattr(self, 'DESENVOLVIMENTO'):
             self.color_levels()
@@ -56,7 +56,7 @@ class Config():
 
         logging.debug(f'FILE ENV READ {has_file}')
 
-    def env_requireds(self):
+    def env_requireds(self) -> None:
         """FAZ A LEITURA DOS"""
         logging.debug('INICIANDO A LEITURA DE ENVS OBRIGATORIAS')
         self.load_env_generic(
@@ -71,7 +71,7 @@ class Config():
 
         self.show_modo(' REQUIREMENTS CARREGADOS ')
 
-    def init(self):
+    def init(self) -> None:
         """INICIALIZADOR DAS CONFIGURAÇÕES"""
         self.load_files_env()
         self.env_requireds()
@@ -79,7 +79,7 @@ class Config():
         logging.info('ENV REQUIREMENTS OKAY')
 
     @staticmethod
-    def add_color_level(color: str, level: Any):
+    def add_color_level(color: str, level: Any) -> None:
         """COLOCAR A COR NO LEVEL DO LOG"""
         reset = "\033[0m"
         logging.addLevelName(
@@ -90,7 +90,7 @@ class Config():
                      critical: str = None,
                      warning: str = None,
                      info: str = None,
-                     debug: str = None):
+                     debug: str = None) -> None:
         """COLOCAR AS CORES NO LEVELS DE LOG"""
         logging.debug('DEFININDO AS CORES DE LOG')
         self.add_color_level(error or self.COLOR_RESET, logging.ERROR)
@@ -100,7 +100,7 @@ class Config():
         self.add_color_level(debug or self.COLOR_GREEN, logging.DEBUG)
 
     @staticmethod
-    def value_on_env(envname: str):
+    def value_on_env(envname: str) -> str:
         """PEGA UM VALOR DA ENV SE NAO ACHAR LEVANTA UM ERRO -> EnvError."""
         try:
             return os.environ[envname]
@@ -108,7 +108,7 @@ class Config():
             raise EnvError(f'{envname} NÃO DEFINIDO!') from error
 
     @staticmethod
-    def check_value_in_choice(value: Any, envname: str, choices: list | dict):
+    def check_value_in_choice(value: Any, envname: str, choices: list | dict) -> None:
         """VERIFICA SE O VALOR ESTAR NA CHOICE
         SE NAO ESTIVER LEVANTA UM ERROR -> EnvError"""
         if choices and value not in choices:
@@ -121,7 +121,7 @@ class Config():
             database,
             username,
             password,
-            driver='{ODBC Driver 17 for SQL Server}'):
+            driver='{ODBC Driver 17 for SQL Server}') -> str:
         """CRIAR A URL DE CONECXÃO COM O BANCO DE DADOS"""
         conn_str = f"Driver={driver};"\
             f"Server={server};"\
@@ -134,7 +134,7 @@ class Config():
         return uri
 
     @staticmethod
-    def value_on_choice(value: Any, choice: list | dict = None):
+    def value_on_choice(value: Any, choice: list | dict = None) -> Any:
         """PEGA O VALOR REFERENTE AO CHOICE or raise EnvError"""
         if isinstance(choice, list):
             return value
@@ -142,7 +142,7 @@ class Config():
             return choice[value]
         return value
 
-    def env_valid(self, envname: str, choices: list | dict):
+    def env_valid(self, envname: str, choices: list | dict) -> str:
         """PEGAR O VALOR DA ENV E PEGAR O VALOR VALIDO CORESPONDENTE"""
         value = self.value_on_env(envname=envname)
         self.check_value_in_choice(
@@ -157,7 +157,7 @@ class Config():
                  on_load_value_valid: callable,
                  on_value_in_choice: callable,
                  choices: list | dict = None,
-                 ):
+                 ) -> None:
         """FAZ AS CHAMADAS DE PERGAR E CAPTURAR O VALOR E DEFINE NO OBJETO O VALOR"""
         logging.debug(f'LOAD ENV {envname}')
         value = on_load_value_valid(
@@ -167,7 +167,7 @@ class Config():
         value = on_value_in_choice(value, choices)
         setattr(self, envname, value)
 
-    def load_env_generic(self, envname: str, choices: list | dict = None):
+    def load_env_generic(self, envname: str, choices: list | dict = None) -> None:
         """FAZ UMA CHAMADA COM A VALIDAÇÃO GENERICA DO OBJETO"""
         logging.debug(f"LOAD GENERIC ENV {envname}")
         return self.load_env(
@@ -177,19 +177,19 @@ class Config():
             choices=choices
         )
 
-    def set_desenvolvimento(self):
+    def set_desenvolvimento(self) -> None:
         """COLOCA O VALOR NA VARIAVEL DESENVOLVIMENTO DE ACORDO COM O VALOR EM AMBIENTE"""
         logging.debug('LEITURA DE AMBIENTE')
         self.load_env_generic('AMBIENTE', ['DESENVOLVIMENTO', 'PRODUCAO'])
         dev = True if getattr(self, 'AMBIENTE') == 'DESENVOLVIMENTO' else False
         setattr(self, 'DESENVOLVIMENTO', dev)
 
-    def load_envs_generic(self, *envnames: str):
+    def load_envs_generic(self, *envnames: str) -> None:
         """PEGAR OS VALORES DA ENV"""
         for envname in envnames:
             self.load_env_generic(envname)
 
-    def load_env_database(self, uri: str = None):
+    def load_env_database(self, uri: str = None) -> None:
         """LER AS VARIAVEIS DE AMBIENTE E CRIA A URI DE CONEXÃO DO BANCO."""
         logging.info('GERANDO URI DE CONEXÃO')
 
