@@ -3,6 +3,7 @@
 ## START
 ```bash
 EXPORT AMBIENTE=[PRODUCAO | DESENVOLVIMENTO]
+pip install -r requirements.txt
 flask run
 ```
 
