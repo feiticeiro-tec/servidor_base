@@ -2,13 +2,13 @@
 
 
 class ExceptionBase(Exception):
-    """Exeção Base Para Colorir o Error"""
+    """Exeção Base Para Colorir o Error jhbskdgvjashgvajshgdvajhsgdvajshdgvajsgdvjahsgdv"""
     COLOR = '\033[1;31m'
     RESET = '\033[0m'
 
     def __str__(self) -> str:
         return f"{self.COLOR}{self.__class__.__name__}"\
-                "{self.RESET}: {self.args[0]}"
+            "{self.RESET}: {self.args[0]}"
 
 
 class EnvError(ExceptionBase):
