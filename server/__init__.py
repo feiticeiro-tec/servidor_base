@@ -2,12 +2,15 @@
 import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_restx import Api
 from server.database import init_db
+from server.api import init_api
 
 
 class Servidor(Flask):
     """EXTENÇÃO DA CLASS FLASK"""
     database: SQLAlchemy
+    api: Api
 
     def __init__(self, config):
         super().__init__(__name__)
@@ -28,3 +31,9 @@ class Servidor(Flask):
         logging.info("INICIALIZANDO O BANCO DE DADOS...")
         with self.app_context():
             self.database = init_db(self)
+
+    def init_api(self):
+        """INICIALIZAÇÃO DA API JUNTO AS SUAS ROTAS """
+        logging.info("INICIALIZANO A API")
+        with self.app_context():
+            self.api = init_api(self)

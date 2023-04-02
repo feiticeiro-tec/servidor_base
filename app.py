@@ -15,10 +15,8 @@ conf.load_env_database(uri='sqlite:///db.db')
 app = Servidor(conf)
 app.init_config()
 app.init_database()
+app.init_api()
 
 app.config_env.show_modo(' ONLINE ')
 
-with app.app_context():
-    from server.database.models import Teste
-    t = Teste()
-    t.add_save()
+
