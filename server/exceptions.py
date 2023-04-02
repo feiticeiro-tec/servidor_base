@@ -2,7 +2,7 @@
 
 
 class ExceptionBase(Exception):
-    """Exeção Base Para Colorir o Error jhbskdgvjashksmdgvajshgdvajolasdahsgdvajshdgvajsgdvjahsgdv"""
+    """Exeção Base Para Colorir o Error"""
     COLOR = '\033[1;31m'
     RESET = '\033[0m'
 
