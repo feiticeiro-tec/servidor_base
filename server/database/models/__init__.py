@@ -16,5 +16,6 @@ class Usuario(ParanoicoModel, db.Model):
         super().__init__()
 
     def insert_login(self, username, password):
+        """INSERT DAS INFORMAÇÕES DE LOGIN"""
         self.password = password
         self.username = username
